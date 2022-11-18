@@ -34,6 +34,7 @@ select option[value=""] {
 	</header>
 	<br>
 	<input type="hidden" id="status" value="${status}">
+	<input type="hidden" id="memberstatus" value="${memberstatus}">
 	<div class="container" style="margin-left: 32%">
 		<div class="card" style="width: 500px">
 			<div class="card-body">
@@ -48,10 +49,10 @@ select option[value=""] {
 					</fieldset>
 					<fieldset class="form-group">
 						<div class="form-floating mb-3">
-							<input type="password" class="form-control" id="floatingInput"
+							<input type="password" class="form-control" id="floatingInput2"
 								placeholder="請輸入密碼" name="memberpassword" required> <label
-								for="floatingInput"><i class="fa-sharp fa-solid fa-lock"></i>
-								密碼：</label>
+								for="floatingInput2"><i
+								class="fa-sharp fa-solid fa-lock"></i> 密碼：</label>
 						</div>
 					</fieldset>
 					<hr>
@@ -61,6 +62,13 @@ select option[value=""] {
 						class="btn btn-outline-info">我還不是會員</label></a>
 				</form>
 			</div>
+		</div>
+	</div>
+	<br>
+	<div class="container" style="margin-left: 32%">
+		<div class="card-body">
+			<button class="btn btn-sm btn-outline-primary" id="manager">管理人員</button>
+			<button class="btn btn-sm btn-outline-primary" id="tester">測試小明</button>
 		</div>
 	</div>
 	<footer
@@ -89,6 +97,26 @@ select option[value=""] {
 		if (status == "failed") {
 			swal("登入失敗", "輸入電子信箱或密碼有誤", "error")
 		}
+		var memberstatus = document.getElementById("memberstatus").value;
+		if (memberstatus == "limitmember") {
+			swal("登入出現問題", "該會員已停用,請洽客服人員", "warning")
+		}
+		document.getElementById("manager").addEventListener(
+				"click",
+				function() {
+					document.getElementById("floatingInput").setAttribute(
+							"value", "arthur800322@hotmail.com");
+					document.getElementById("floatingInput2").setAttribute(
+							"value", "1234");
+				});
+		document.getElementById("tester").addEventListener(
+				"click",
+				function() {
+					document.getElementById("floatingInput").setAttribute(
+							"value", "ming123@gmail.com");
+					document.getElementById("floatingInput2").setAttribute(
+							"value", "1234");
+				});
 	</script>
 </body>
 </html>

@@ -13,5 +13,9 @@ public interface IMemberService {
 
 	public Member update(Member member);
 
+	public Member changeLevelToStop(int memberid);
+
+	public Member changeLevelToUser(int memberid);
+
 	public boolean deleteById(int memberid);
 }

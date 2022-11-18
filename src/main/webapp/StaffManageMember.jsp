@@ -143,9 +143,15 @@ main {
 			</ul>
 		</div>
 		<div class="b-example-divider"></div>
+
 		<div class="container-fluid"
 			style="background-color: rgba(0, 0, 0, 0.1)">
 			<div class="card shadow mb-4" style="margin-top: 26px;">
+				<div class="mb-4 text-end">
+					<label style="margin-right: 12px; margin-top: 6px">管理員：${sessionScope.membername}
+					</label> <a href="logout.do" class="btn btn-warning btn-sm"
+						style="margin-right: 12px; margin-top: 6px">登出</a>
+				</div>
 				<div class="card-header py-3" style="background-color: black">
 					<h3 class="m-0 font-weight-bold text-white">會員資料表</h3>
 				</div>
@@ -180,19 +186,54 @@ main {
 							</thead>
 							<tbody>
 								<c:forEach var="member" items="${listmember}">
-									<tr>
-										<td align="center" valign="middle">${member.memberid}</td>
-										<td align="center" valign="middle">${member.membername}</td>
-										<td align="center" valign="middle">${member.memberemail}</td>
-										<td align="center" valign="middle">${member.memberpassword}</td>
-										<td align="center" valign="middle">${member.membermobile}</td>
-										<td align="center" valign="middle"><input type="text" size="5" style = "text-align:center" readonly value="${member.memberlevel}" /></td>
-										<td align="center" valign="middle"><a
-											href="editmember?memberid=${member.memberid}"
-											class="btn btn-outline-primary btn-sm">編輯</a> <a href="#"
-											data-url="deletemember.do?memberid=${member.memberid}"
-											class="btn btn-outline-danger btn-sm" id="delete">刪除</a></td>
-									</tr>
+									<c:if test="${member.memberlevel=='管理人員'}">
+										<tr>
+											<td align="center" valign="middle">${member.memberid}</td>
+											<td align="center" valign="middle">${member.membername}</td>
+											<td align="center" valign="middle">${member.memberemail}</td>
+											<td align="center" valign="middle">${member.memberpassword}</td>
+											<td align="center" valign="middle">${member.membermobile}</td>
+											<td align="center" valign="middle">${member.memberlevel}</td>
+											<td align="center" valign="middle"></td>
+										</tr>
+									</c:if>
+									<c:if test="${member.memberlevel=='一般會員'}">
+										<tr>
+											<td align="center" valign="middle">${member.memberid}</td>
+											<td align="center" valign="middle">${member.membername}</td>
+											<td align="center" valign="middle">${member.memberemail}</td>
+											<td align="center" valign="middle">${member.memberpassword}</td>
+											<td align="center" valign="middle">${member.membermobile}</td>
+											<td align="center" valign="middle">${member.memberlevel}</td>
+											<td align="center" valign="middle"><a
+												href="changememberlevel.do?memberid=${member.memberid}&memberlevel=${member.memberlevel}"
+												class="btn btn-warning btn-sm">停用</a> <a href="#"
+												data-url="deletemember.do?memberid=${member.memberid}"
+												class="btn btn-danger btn-sm" id="delete">刪除</a></td>
+										</tr>
+									</c:if>
+									<c:if test="${member.memberlevel=='停用'}">
+										<tr>
+											<td align="center" valign="middle"
+												style="background-color: lightgray">${member.memberid}</td>
+											<td align="center" valign="middle"
+												style="background-color: lightgray">${member.membername}</td>
+											<td align="center" valign="middle"
+												style="background-color: lightgray">${member.memberemail}</td>
+											<td align="center" valign="middle"
+												style="background-color: lightgray">${member.memberpassword}</td>
+											<td align="center" valign="middle"
+												style="background-color: lightgray">${member.membermobile}</td>
+											<td align="center" valign="middle"
+												style="background-color: lightgray">${member.memberlevel}</td>
+											<td align="center" valign="middle"
+												style="background-color: lightgray"><a
+												href="changememberlevel.do?memberid=${member.memberid}&memberlevel=${member.memberlevel}"
+												class="btn btn-success btn-sm">啟用</a> <a href="#"
+												data-url="deletemember.do?memberid=${member.memberid}"
+												class="btn btn-danger btn-sm" id="delete">刪除</a></td>
+										</tr>
+									</c:if>
 								</c:forEach>
 							</tbody>
 						</table>
@@ -202,7 +243,7 @@ main {
 		</div>
 	</main>
 	<script>
-		$(".btn-outline-danger").click(function() {
+		$(".btn-danger").click(function() {
 			let url = $(this).data('url');
 			swal.fire({
 				title : "確認刪除?",

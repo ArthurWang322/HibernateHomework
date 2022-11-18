@@ -23,7 +23,6 @@ public class LoginServlet extends HttpServlet {
 			throws ServletException, IOException {
 		request.setCharacterEncoding("UTF-8");
 		HttpSession session = request.getSession();
-
 		String memberemail = request.getParameter("memberemail");
 		String memberpassword = request.getParameter("memberpassword");
 		SessionFactory factory = HibernateUtil.getSessionFactory();
@@ -35,9 +34,19 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("status", "failed");
 				request.getRequestDispatcher("Login.jsp").forward(request, response);
 			} else {
-				session.setAttribute("membername", member.getMembername());
-				session.setAttribute("memberid", member.getMemberid());
-				request.getRequestDispatcher("Index.jsp").forward(request, response);
+				if (member.getMemberlevel().equals("一般會員")) {
+					session.setAttribute("membername", member.getMembername());
+					session.setAttribute("memberid", member.getMemberid());
+					request.getRequestDispatcher("Index.jsp").forward(request, response);
+				}
+				if (member.getMemberlevel().equals("停用")) {
+					request.setAttribute("memberstatus", "limitmember");
+					request.getRequestDispatcher("Login.jsp").forward(request, response);
+				}
+				if (member.getMemberlevel().equals("管理人員")) {
+					session.setAttribute("membername", member.getMembername());
+					request.getRequestDispatcher("StaffManageMember.jsp").forward(request, response);
+				}
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

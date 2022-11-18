@@ -30,14 +30,13 @@ public class RegisterServlet extends HttpServlet {
 		member.setMemberemail(memberemail);
 		member.setMemberpassword(memberpassword);
 		member.setMembermobile(membermobile);
-		member.setMemberlevel("user");
+		member.setMemberlevel("一般會員");
 		SessionFactory factory = HibernateUtil.getSessionFactory();
 		Session session = factory.getCurrentSession();
 		MemberService mService = new MemberService(session);
 		try {
 			mService.insert(member);
 			request.setAttribute("status", "success");
-
 		} catch (Exception e) {
 			request.setAttribute("status", "failed");
 //			e.printStackTrace();

@@ -51,6 +51,22 @@ public class MemberDAO {
 		return rs;
 	}
 
+	public Member changeLevelToStop(int memberid) {
+		Member rs = session.get(Member.class, memberid);
+		if (rs != null) {
+			rs.setMemberlevel("停用");
+		}
+		return rs;
+	}
+
+	public Member changeLevelToUser(int memberid) {
+		Member rs = session.get(Member.class, memberid);
+		if (rs != null) {
+			rs.setMemberlevel("一般會員");
+		}
+		return rs;
+	}
+
 	public boolean deleteById(int memberid) {
 		Member rs = session.get(Member.class, memberid);
 		if (rs != null) {

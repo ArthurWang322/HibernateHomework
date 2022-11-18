@@ -3,7 +3,6 @@ package tw.thirdteam.model;
 import java.util.List;
 
 import org.hibernate.Session;
-import org.hibernate.query.Query;
 
 public class MemberService implements IMemberService {
 	private MemberDAO mDao;
@@ -30,6 +29,14 @@ public class MemberService implements IMemberService {
 
 	public Member update(Member member) {
 		return mDao.update(member);
+	}
+
+	public Member changeLevelToStop(int memberid) {
+		return mDao.changeLevelToStop(memberid);
+	}
+
+	public Member changeLevelToUser(int memberid) {
+		return mDao.changeLevelToUser(memberid);
 	}
 
 	public boolean deleteById(int memberid) {
